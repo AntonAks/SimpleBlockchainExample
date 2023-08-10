@@ -10,13 +10,21 @@ except FileExistsError:
     pass
 
 
-def get_hash(filename):
+def get_hash(filename) -> str:
+    """
+    :param filename: filename with block 
+    :return: hash from a block
+    """
     with open(f'{blockchain_dir}/{filename}', 'rb') as file:
         _hash = hashlib.sha256(file.read()).hexdigest()
         return _hash
 
 
-def check_integrity():
+def check_integrity() -> None:
+    """
+    This function checks hash consistency in all blocks
+    :return: None 
+    """
     files = sorted([int(i) for i in os.listdir(blockchain_dir)])
     for f in files[1:]:
         with open(f'{blockchain_dir}/{f}', 'rb') as _f:
@@ -30,7 +38,15 @@ def check_integrity():
                 print(f"ERROR - Block {current_block_num - 1} is Corrupted")
 
 
-def write_block(name, vote, prev_hash=""):
+def write_block(name: str, vote: str, prev_hash: str = "") -> None:
+    """
+    This function creates file (block) in blocks folder
+    
+    :param name: some person name
+    :param vote: another name
+    :param prev_hash: hash from previous block
+    :return: None
+    """
 
     files = sorted([int(i) for i in os.listdir(blockchain_dir)])
 
